@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<title>OHCA GECX Voice Agent Stabilization</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Layout: single column report; summary strip, timeline grid, two work lists, milestone table. */
+  :root {
+    --bg: #f5f6f3; --surface: #ffffff; --ink: #18232f; --muted: #5b6672; --line: #dfe3e6;
+    --accent: #1d5c8c; --accent-soft: #dbe8f3; --bar: #3d7fb3; --bar-done: #8aa9c2;
+    --ok: #1f7a4d; --ok-soft: #dcefe4; --warn: #9a5b06; --warn-soft: #f8ead2; --bad: #a3271f; --bad-soft: #f7dddb;
+    --hatch: #e9ebe6; --today: #c2410c;
+    --font: 'IBM Plex Sans', 'Segoe UI', Arial, sans-serif; --mono: 'IBM Plex Mono', Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #11161c; --surface: #18202a; --ink: #e6ebf0; --muted: #9aa6b2; --line: #2b3642;
+      --accent: #7fb6e3; --accent-soft: #1d3346; --bar: #4e93c9; --bar-done: #3c5a72;
+      --ok: #6fcf9b; --ok-soft: #173326; --warn: #f0b45c; --warn-soft: #3a2a12; --bad: #f08a80; --bad-soft: #3d1b18;
+      --hatch: #1f2832; --today: #fb923c; color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font); }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+  header { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: flex-end; justify-content: space-between; margin-bottom: 22px; }
+  h1 { margin: 0; font-size: 26px; line-height: 1.2; font-weight: 700; text-wrap: balance; }
+  .sub { color: var(--muted); margin-top: 4px; }
+  .asof { color: var(--muted); font-size: 13px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  button { font: 600 13px var(--font); color: var(--accent); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+  .label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .value { font-size: 20px; font-weight: 700; margin-top: 4px; line-height: 1.25; }
+  .small { font-size: 13px; color: var(--muted); }
+  .pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+  .s-done { background: var(--ok-soft); color: var(--ok); }
+  .s-progress { background: var(--accent-soft); color: var(--accent); }
+  .s-blocked { background: var(--bad-soft); color: var(--bad); }
+  .s-risk { background: var(--warn-soft); color: var(--warn); }
+  .s-not { background: var(--hatch); color: var(--muted); }
+  .health { font-size: 20px; padding: 3px 12px; }
+
+  section { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px 18px 16px; margin-bottom: 18px; }
+  h2 { margin: 0 0 12px; font-size: 16px; font-weight: 700; }
+  .meter { height: 6px; background: var(--hatch); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+  .meter > span { display: block; height: 100%; background: var(--ok); }
+
+  .gantt-scroll { overflow-x: auto; }
+  .gantt { display: grid; min-width: 760px; row-gap: 6px; font-size: 13px; }
+  .g-head { font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: center; padding-bottom: 4px; line-height: 1.3; }
+  .g-head b { display: block; color: var(--ink); font-family: var(--font); font-size: 12px; }
+  .g-head.current b { color: var(--today); }
+  .g-cell { border-left: 1px solid var(--line); min-height: 26px; }
+  .g-cell.holiday { background: repeating-linear-gradient(135deg, var(--hatch) 0 6px, transparent 6px 12px); }
+  .g-cell.current { background: color-mix(in srgb, var(--today) 9%, transparent); }
+  .g-label { padding-right: 12px; align-self: center; font-weight: 600; min-width: 0; }
+  .g-label.ms { font-weight: 500; color: var(--muted); }
+  .g-bar { align-self: center; height: 18px; border-radius: 4px; background: var(--bar); margin: 0 3px; position: relative; overflow: hidden; }
+  .g-bar.done { background: var(--bar-done); }
+  .g-bar.blocked { background: var(--bad); }
+  .g-bar > i { position: absolute; inset: 0 auto 0 0; background: rgba(255,255,255,.35); }
+  .g-ms { align-self: center; justify-self: center; width: 13px; height: 13px; transform: rotate(45deg); background: var(--accent); }
+  .g-ms.done { background: var(--ok); }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; font-size: 12px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 14px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .two section { margin-bottom: 0; }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { padding: 10px 0; border-top: 1px solid var(--line); display: flex; gap: 12px; justify-content: space-between; align-items: flex-start; }
+  .list li:first-child { border-top: 0; padding-top: 2px; }
+  .list .t { min-width: 0; }
+  .list .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .empty { color: var(--muted); font-size: 14px; }
+  .late { color: var(--bad); font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 0 10px 8px 0; border-bottom: 1px solid var(--line); }
+  td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .table-scroll { overflow-x: auto; }
+  footer { color: var(--muted); font-size: 12px; margin-top: 8px; }
+
+  @media (max-width: 860px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .two { grid-template-columns: 1fr; gap: 18px; } }
+  @media (max-width: 560px) { .ms-table th:nth-child(2), .ms-table td:nth-child(2) { display: none; } }
+  @media (max-width: 460px) { .tiles { grid-template-columns: 1fr; } h1 { font-size: 22px; } }
+  @media (prefers-reduced-motion: no-preference) { button { transition: border-color .15s; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1 id="title"></h1>
+      <div class="sub" id="subtitle"></div>
+    </div>
+    <div class="asof"><span id="asof"></span><button id="refresh" type="button">Refresh</button></div>
+  </header>
+
+  <div class="tiles">
+    <div class="tile"><div class="label">Overall status</div><div class="value" id="health"></div><div class="small" id="healthNote"></div></div>
+    <div class="tile"><div class="label">Where we are</div><div class="value" id="week"></div><div class="small" id="weekNote"></div></div>
+    <div class="tile"><div class="label">Next milestone</div><div class="value" id="next"></div><div class="small" id="nextDate"></div></div>
+    <div class="tile"><div class="label">Tasks complete</div><div class="value" id="done"></div><div class="meter"><span id="doneBar"></span></div></div>
+  </div>
+
+  <section>
+    <h2>Timeline</h2>
+    <div class="gantt-scroll"><div class="gantt" id="gantt"></div></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--bar)"></i>Planned</span>
+      <span><i class="sw" style="background:var(--bar-done)"></i>Complete</span>
+      <span><i class="sw" style="background:var(--bad)"></i>Blocked</span>
+      <span><i class="sw" style="background:repeating-linear-gradient(135deg,var(--muted) 0 2px,transparent 2px 4px)"></i>Holiday break</span>
+      <span><i class="sw" style="background:var(--today);opacity:.35"></i>Current week</span>
+    </div>
+  </section>
+
+  <div class="two">
+    <section><h2>Waiting on</h2><ul class="list" id="waiting"></ul></section>
+    <section><h2>This week and next</h2><ul class="list" id="upcoming"></ul></section>
+  </div>
+
+  <section style="margin-top:18px">
+    <h2>Milestones</h2>
+    <div class="table-scroll"><table class="ms-table">
+      <thead><tr><th>Milestone</th><th>Owner</th><th>Planned week</th><th>Status</th></tr></thead>
+      <tbody id="milestones"></tbody>
+    </table></div>
+  </section>
+
+  <footer id="footer">Updated automatically from the project plan. Dates are planned weeks.</footer>
+</div>
+
+<script>
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); }
+  function statusClass(s) { return { 'Done': 's-done', 'N/A': 's-done', 'In Progress': 's-progress', 'Blocked': 's-blocked' }[s] || 's-not'; }
+  function pill(s) { return '<span class="pill ' + statusClass(s) + '">' + esc(s) + '</span>'; }
+  function $(id) { return document.getElementById(id); }
+
+  function render(d) {
+    $('title').textContent = d.title;
+    $('subtitle').textContent = d.subtitle;
+    $('asof').textContent = 'Updated ' + d.asOf;
+
+    var hClass = { 'On track': 's-done', 'At risk': 's-risk', 'Blocked': 's-blocked' }[d.health] || 's-not';
+    $('health').innerHTML = '<span class="pill health ' + hClass + '">' + esc(d.health) + '</span>';
+    var notes = [];
+    if (d.counts.blocked) notes.push(d.counts.blocked + ' blocked');
+    if (d.counts.overdue) notes.push(d.counts.overdue + ' past planned date');
+    $('healthNote').textContent = notes.length ? notes.join(' · ') : 'Nothing blocked or late';
+    $('week').textContent = d.currentWeek >= 1 ? 'Week ' + d.currentWeek : 'Pre-start';
+    var lastWeek = d.weeks.length ? d.weeks[d.weeks.length - 1] : null;
+    $('weekNote').textContent = d.currentWeek >= 1 ? 'of ' + (lastWeek ? lastWeek.n : '') + ' planned weeks' : d.currentWeekLabel.replace('Pre-start ', '').replace(/[()]/g, '');
+    $('next').textContent = d.nextMilestone ? d.nextMilestone.task : 'All milestones complete';
+    $('nextDate').textContent = d.nextMilestone ? 'Week of ' + d.nextMilestone.start : '';
+    $('done').textContent = d.counts.done + ' of ' + d.counts.total;
+    $('doneBar').style.width = (d.counts.total ? Math.round(100 * d.counts.done / d.counts.total) : 0) + '%';
+
+    renderGantt(d);
+
+    $('waiting').innerHTML = d.waiting.length ? d.waiting.map(function (x) {
+      return '<li><div class="t">' + esc(x.task) + '<div class="meta">' + esc(x.owner) + ' · due ' + esc(x.end) +
+        (x.overdue ? ' · <span class="late">past planned date</span>' : '') + '</div></div>' + pill(x.status) + '</li>';
+    }).join('') : '<li class="empty">Nothing outstanding from OHCA or Google right now.</li>';
+
+    $('upcoming').innerHTML = d.upcoming.length ? d.upcoming.map(function (x) {
+      return '<li><div class="t">' + esc(x.task) + '<div class="meta">' + esc(x.owner) + ' · ' + esc(x.start) + ' – ' + esc(x.end) +
+        (x.overdue ? ' · <span class="late">past planned date</span>' : '') + '</div></div>' + pill(x.status) + '</li>';
+    }).join('') : '<li class="empty">No tasks scheduled in the next two weeks.</li>';
+
+    $('milestones').innerHTML = d.milestones.map(function (m) {
+      return '<tr><td>' + esc(m.task) + '</td><td>' + esc(m.owner) + '</td><td class="num">Week of ' + esc(m.start) + '</td><td>' + pill(m.status) + '</td></tr>';
+    }).join('');
+  }
+
+  function renderGantt(d) {
+    var weeks = d.weeks, first = weeks.length ? weeks[0].n : 1;
+    var g = $('gantt');
+    g.style.gridTemplateColumns = 'minmax(150px, 220px) repeat(' + weeks.length + ', minmax(52px, 1fr))';
+    var html = '<div></div>';
+    weeks.forEach(function (w) {
+      html += '<div class="g-head' + (w.current ? ' current' : '') + '"><b>' + esc(w.label) + '</b>' + esc(w.start) + (w.holiday ? '<br>Holiday' : '') + '</div>';
+    });
+    var row = 2;
+    function background(r) {
+      return weeks.map(function (w, i) {
+        return '<div class="g-cell' + (w.holiday ? ' holiday' : '') + (w.current ? ' current' : '') + '" style="grid-row:' + r + ';grid-column:' + (i + 2) + '"></div>';
+      }).join('');
+    }
+    function col(wk) { return Math.max(0, Math.min(weeks.length - 1, wk - first)) + 2; }
+    d.phases.forEach(function (p) {
+      var cls = p.status === 'Done' ? ' done' : p.status === 'Blocked' ? ' blocked' : '';
+      html += '<div class="g-label" style="grid-row:' + row + ';grid-column:1">' + esc(p.name) + '<div class="small">' + p.done + ' of ' + p.total + ' tasks done</div></div>';
+      html += background(row);
+      html += '<div class="g-bar' + cls + '" title="' + esc(p.name + ': ' + p.start + ' – ' + p.end) + '" style="grid-row:' + row + ';grid-column:' + col(p.startWk) + ' / ' + (col(p.endWk) + 1) + '">' +
+        (p.status !== 'Done' && p.pct ? '<i style="width:' + p.pct + '%"></i>' : '') + '</div>';
+      row++;
+    });
+    d.milestones.forEach(function (m) {
+      if (m.endWk == null) return;
+      var done = m.status === 'Done' || m.status === 'N/A';
+      html += '<div class="g-label ms" style="grid-row:' + row + ';grid-column:1">◆ ' + esc(m.task) + '</div>';
+      html += background(row);
+      html += '<div class="g-ms' + (done ? ' done' : '') + '" title="' + esc(m.task + ' (week of ' + m.start + ')') + '" style="grid-row:' + row + ';grid-column:' + col(m.endWk) + '"></div>';
+      row++;
+    });
+    g.innerHTML = html;
+  }
+
+  function showError(msg) {
+    $('asof').textContent = msg;
+  }
+
+  function load(btn) {
+    if (btn) { btn.disabled = true; btn.textContent = 'Refreshing…'; }
+    fetch('data.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) { render(d); })
+      .catch(function () { showError('Could not load the latest data. Try again in a minute.'); })
+      .then(function () { if (btn) { btn.disabled = false; btn.textContent = 'Refresh'; } });
+  }
+
+  load();
+  $('refresh').addEventListener('click', function () { load($('refresh')); });
+  setInterval(load, 15 * 60 * 1000); // pick up new data while the page stays open
+</script>
+</body>
+</html>
