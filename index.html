@@ -82,6 +82,8 @@
   .list .t { min-width: 0; }
   .list .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
   .empty { color: var(--muted); font-size: 14px; }
+  .desc { font-size: 13px; color: var(--muted); margin-top: 3px; max-width: 72ch; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 1px 7px; border-radius: 4px; margin-right: 8px; vertical-align: 1px; }
   .late { color: var(--bad); font-weight: 600; }
 
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
@@ -126,6 +128,11 @@
     </div>
   </section>
 
+  <section>
+    <h2>Issues, risks and actions</h2>
+    <ul class="list" id="raid"></ul>
+  </section>
+
   <div class="two">
     <section><h2>Waiting on</h2><ul class="list" id="waiting"></ul></section>
     <section><h2>This week and next</h2><ul class="list" id="upcoming"></ul></section>
@@ -159,6 +166,7 @@
     var notes = [];
     if (d.counts.blocked) notes.push(d.counts.blocked + ' blocked');
     if (d.counts.overdue) notes.push(d.counts.overdue + ' past planned date');
+    if (d.counts.openIssues) notes.push(d.counts.openIssues + ' open issue' + (d.counts.openIssues === 1 ? '' : 's'));
     $('healthNote').textContent = notes.length ? notes.join(' · ') : 'Nothing blocked or late';
     $('week').textContent = d.currentWeek >= 1 ? 'Week ' + d.currentWeek : 'Pre-start';
     var lastWeek = d.weeks.length ? d.weeks[d.weeks.length - 1] : null;
@@ -169,6 +177,17 @@
     $('doneBar').style.width = (d.counts.total ? Math.round(100 * d.counts.done / d.counts.total) : 0) + '%';
 
     renderGantt(d);
+
+    var raid = d.raid || [];
+    var typeClass = { Issue: 's-blocked', Risk: 's-risk', Action: 's-progress', Dependency: 's-progress', Decision: 's-not' };
+    var prioClass = { High: 's-blocked', Medium: 's-risk', Low: 's-not' };
+    $('raid').innerHTML = raid.length ? raid.map(function (x) {
+      var meta = [x.owner, x.due ? 'due ' + x.due : '', x.status !== 'Open' ? x.status : ''].filter(Boolean).map(esc).join(' · ');
+      return '<li><div class="t"><span class="tag ' + (typeClass[x.type] || 's-not') + '">' + esc(x.type) + '</span>' + esc(x.title) +
+        (x.description ? '<div class="desc">' + esc(x.description) + '</div>' : '') +
+        '<div class="meta">' + meta + (x.overdue ? ' · <span class="late">past due</span>' : '') + '</div></div>' +
+        (x.priority ? '<span class="pill ' + (prioClass[x.priority] || 's-not') + '">' + esc(x.priority) + '</span>' : '') + '</li>';
+    }).join('') : '<li class="empty">No open issues or risks.</li>';
 
     $('waiting').innerHTML = d.waiting.length ? d.waiting.map(function (x) {
       return '<li><div class="t">' + esc(x.task) + '<div class="meta">' + esc(x.owner) + ' · due ' + esc(x.end) +
