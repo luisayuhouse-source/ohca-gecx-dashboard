@@ -129,7 +129,7 @@
   </section>
 
   <section>
-    <h2>Issues, risks and actions</h2>
+    <h2>Issues and risks</h2>
     <ul class="list" id="raid"></ul>
   </section>
 
@@ -190,12 +190,12 @@
     }).join('') : '<li class="empty">No open issues or risks.</li>';
 
     $('waiting').innerHTML = d.waiting.length ? d.waiting.map(function (x) {
-      return '<li><div class="t">' + esc(x.task) + '<div class="meta">' + esc(x.owner) + ' · due ' + esc(x.end) +
+      return '<li><div class="t">' + esc(x.task) + '<div class="meta">' + esc(x.owner) + (x.end ? ' · due ' + esc(x.end) : '') +
         (x.overdue ? ' · <span class="late">past planned date</span>' : '') + '</div></div>' + pill(x.status) + '</li>';
     }).join('') : '<li class="empty">Nothing outstanding from OHCA or Google right now.</li>';
 
     $('upcoming').innerHTML = d.upcoming.length ? d.upcoming.map(function (x) {
-      return '<li><div class="t">' + esc(x.task) + '<div class="meta">' + esc(x.owner) + ' · ' + esc(x.start) + ' – ' + esc(x.end) +
+      return '<li><div class="t">' + esc(x.task) + '<div class="meta">' + esc(x.owner) + ' · ' + (x.start ? esc(x.start) + ' – ' + esc(x.end) : 'due ' + esc(x.end)) +
         (x.overdue ? ' · <span class="late">past planned date</span>' : '') + '</div></div>' + pill(x.status) + '</li>';
     }).join('') : '<li class="empty">No tasks scheduled in the next two weeks.</li>';
 
