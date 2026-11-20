@@ -1,17 +1,17 @@
 {
  "title": "OHCA GECX Voice Agent Stabilization",
  "subtitle": "Onix · Google · Oklahoma Health Care Authority",
- "asOf": "Fri Nov 20, 2026 at 10:11 AM EST",
+ "asOf": "Fri Nov 20, 2026 at 3:03 PM EST",
  "currentWeek": 0,
  "currentWeekLabel": "Pre-start (Week 1 begins Nov 23)",
- "health": "Blocked",
+ "health": "On track",
  "counts": {
   "total": 43,
   "done": 5,
-  "inProgress": 0,
-  "blocked": 1,
+  "inProgress": 1,
+  "blocked": 0,
   "overdue": 0,
-  "openIssues": 1,
+  "openIssues": 0,
   "openRisks": 0
  },
  "nextMilestone": {
@@ -123,7 +123,7 @@
    "total": 15,
    "done": 2,
    "pct": 13,
-   "status": "Blocked",
+   "status": "In Progress",
    "startWk": 0,
    "endWk": 3,
    "start": "Nov 16",
@@ -221,32 +221,6 @@
  ],
  "waiting": [
   {
-   "id": "1.2",
-   "task": "Validate access: DFCX, CX Agent Studio, logging, data stores; read-only prod + NICE config",
-   "owner": "Onix AI Architect",
-   "phase": "Assessment",
-   "type": "Task",
-   "status": "Blocked",
-   "startWk": 1,
-   "endWk": 1,
-   "start": "Nov 23",
-   "end": "Nov 27",
-   "overdue": false
-  },
-  {
-   "id": "A-01",
-   "type": "Action",
-   "title": "Onix access: OHCA domain, virtual desktop and elevated GCP",
-   "task": "Onix access: OHCA domain, virtual desktop and elevated GCP",
-   "description": "Named least-privilege accounts and State onboarding for the Onix engineers. Domain and virtual desktop access are done; elevated GCP access is pending (see I-01).",
-   "owner": "OHCA",
-   "priority": "High",
-   "status": "In Progress",
-   "due": "Nov 20",
-   "end": "Nov 20",
-   "overdue": false
-  },
-  {
    "id": "A-02",
    "type": "Action",
    "title": "Deliver prod agent export, candidate CX Agent Studio agent, playbook, design docs and term-to-queue mapping",
@@ -313,6 +287,19 @@
   }
  ],
  "upcoming": [
+  {
+   "id": "1.2",
+   "task": "Validate access: DFCX, CX Agent Studio, logging, data stores; read-only prod + NICE config",
+   "owner": "Onix AI Architect",
+   "phase": "Assessment",
+   "type": "Task",
+   "status": "In Progress",
+   "startWk": 1,
+   "endWk": 2,
+   "start": "Nov 23",
+   "end": "Dec 4",
+   "overdue": false
+  },
   {
    "id": "1.3",
    "task": "Run discovery sessions (up to 4 x 2 hrs)",
@@ -392,19 +379,5 @@
    "overdue": false
   }
  ],
- "raid": [
-  {
-   "id": "I-01",
-   "type": "Issue",
-   "title": "Elevated GCP access for Onix engineers not yet granted",
-   "task": "Elevated GCP access for Onix engineers not yet granted",
-   "description": "Domain and virtual desktop access are in place. Elevated GCP access is still pending approval, so access validation, discovery and baselining can't start. Each week of delay moves the decision gate (Dec 11) and production cutover (Jan 21).",
-   "owner": "OHCA",
-   "priority": "High",
-   "status": "Open",
-   "due": "Nov 20",
-   "end": "Nov 20",
-   "overdue": false
-  }
- ]
+ "raid": []
 }
