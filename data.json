@@ -1,7 +1,7 @@
 {
  "title": "OHCA GECX Voice Agent Stabilization",
  "subtitle": "Onix · Google · Oklahoma Health Care Authority",
- "asOf": "Thu Nov 19, 2026 at 4:36 PM EST",
+ "asOf": "Fri Nov 20, 2026 at 10:11 AM EST",
  "currentWeek": 0,
  "currentWeekLabel": "Pre-start (Week 1 begins Nov 23)",
  "health": "Blocked",
@@ -251,7 +251,7 @@
    "type": "Action",
    "title": "Deliver prod agent export, candidate CX Agent Studio agent, playbook, design docs and term-to-queue mapping",
    "task": "Deliver prod agent export, candidate CX Agent Studio agent, playbook, design docs and term-to-queue mapping",
-   "description": "",
+   "description": "Partly received: playbook design document (SDD) and flow routing design documents. Still needed: production agent export, a confirmed term-to-queue mapping, and confirmation that the routing documents are current.",
    "owner": "OHCA",
    "priority": "High",
    "status": "In Progress",
@@ -264,7 +264,7 @@
    "type": "Action",
    "title": "Deliver open-ticket list (200+) with call IDs, logs, recordings/transcripts and existing test cases",
    "task": "Deliver open-ticket list (200+) with call IDs, logs, recordings/transcripts and existing test cases",
-   "description": "",
+   "description": "Partly received: a test-script spreadsheet and a short list of post-go-live bug descriptions. Still needed: tickets with call IDs, timestamps and transcripts or recordings; current speech settings (Chirp model, phrase lists, Spanish/Vietnamese setup); data store website list.",
    "owner": "OHCA",
    "priority": "High",
    "status": "In Progress",
@@ -283,6 +283,19 @@
    "status": "Open",
    "due": "Nov 20",
    "end": "Nov 20",
+   "overdue": false
+  },
+  {
+   "id": "A-15",
+   "type": "Action",
+   "title": "Share prior diagnosis notes, and the candidate CX Agent Studio agent's builder and current progress",
+   "task": "Share prior diagnosis notes, and the candidate CX Agent Studio agent's builder and current progress",
+   "description": "",
+   "owner": "Google",
+   "priority": "High",
+   "status": "Open",
+   "due": "Nov 27",
+   "end": "Nov 27",
    "overdue": false
   },
   {
