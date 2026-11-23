@@ -1,9 +1,9 @@
 {
  "title": "OHCA GECX Voice Agent Stabilization",
  "subtitle": "Onix · Google · Oklahoma Health Care Authority",
- "asOf": "Sun Nov 22, 2026 at 6:11 PM EST",
- "currentWeek": 0,
- "currentWeekLabel": "Pre-start (Week 1 begins Nov 23)",
+ "asOf": "Mon Nov 23, 2026 at 12:11 AM EST",
+ "currentWeek": 1,
+ "currentWeekLabel": "Week 1",
  "health": "At risk",
  "counts": {
   "total": 43,
@@ -29,18 +29,11 @@
  },
  "weeks": [
   {
-   "n": 0,
-   "label": "Pre",
-   "start": "Nov 16",
-   "holiday": false,
-   "current": true
-  },
-  {
    "n": 1,
    "label": "W1",
    "start": "Nov 23",
    "holiday": false,
-   "current": false
+   "current": true
   },
   {
    "n": 2,
@@ -113,9 +106,9 @@
    "done": 3,
    "pct": 100,
    "status": "Done",
-   "startWk": 0,
+   "startWk": 1,
    "endWk": -3,
-   "start": "Nov 16",
+   "start": "Nov 23",
    "end": "Oct 30"
   },
   {
@@ -124,9 +117,9 @@
    "done": 2,
    "pct": 13,
    "status": "In Progress",
-   "startWk": 0,
+   "startWk": 1,
    "endWk": 3,
-   "start": "Nov 16",
+   "start": "Nov 23",
    "end": "Dec 11"
   },
   {
@@ -273,6 +266,19 @@
    "overdue": false
   },
   {
+   "id": "A-08",
+   "type": "Action",
+   "title": "Connect candidate CX Agent Studio agent to the NICE test entry point",
+   "task": "Connect candidate CX Agent Studio agent to the NICE test entry point",
+   "description": "If this is late, the Track B comparison slips past the decision gate.",
+   "owner": "OHCA NICE Admin",
+   "priority": "High",
+   "status": "Open",
+   "due": "Dec 4",
+   "end": "Dec 4",
+   "overdue": false
+  },
+  {
    "id": "A-05",
    "type": "Action",
    "title": "Name all OHCA project roles, including Spanish and Vietnamese linguists, and confirm availability",
@@ -284,6 +290,19 @@
    "due": "Nov 20",
    "end": "Nov 20",
    "overdue": true
+  },
+  {
+   "id": "A-14",
+   "type": "Action",
+   "title": "Provide NICE call-volume and routing reports by queue (baseline)",
+   "task": "Provide NICE call-volume and routing reports by queue (baseline)",
+   "description": "Needed to baseline current routing before the decision gate.",
+   "owner": "OHCA NICE Admin",
+   "priority": "Medium",
+   "status": "Open",
+   "due": "Dec 4",
+   "end": "Dec 4",
+   "overdue": false
   }
  ],
  "upcoming": [
@@ -353,6 +372,19 @@
    "overdue": false
   },
   {
+   "id": "1.8",
+   "task": "Baseline production agent on test set in text AND voice (separate ASR vs understanding issues)",
+   "owner": "Onix AI Architect",
+   "phase": "Assessment",
+   "type": "Task",
+   "status": "Not Started",
+   "startWk": 2,
+   "endWk": 3,
+   "start": "Nov 30",
+   "end": "Dec 11",
+   "overdue": false
+  },
+  {
    "id": "1.9",
    "task": "Track A: non-prod copy of DFCX agent; evaluate Gemini ASR vs Chirp, speech adaptation",
    "owner": "Onix Lead Engineer",
@@ -375,6 +407,32 @@
    "startWk": 1,
    "endWk": 3,
    "start": "Nov 23",
+   "end": "Dec 11",
+   "overdue": false
+  },
+  {
+   "id": "1.13",
+   "task": "Review data store (50+ sites, weekly refresh) and retrieval quality on test set",
+   "owner": "Onix AI Architect",
+   "phase": "Assessment",
+   "type": "Task",
+   "status": "Not Started",
+   "startWk": 2,
+   "endWk": 3,
+   "start": "Nov 30",
+   "end": "Dec 11",
+   "overdue": false
+  },
+  {
+   "id": "1.14",
+   "task": "Review conversation logging, redaction and retention vs data-handling policy",
+   "owner": "Onix Lead Engineer",
+   "phase": "Assessment",
+   "type": "Task",
+   "status": "Not Started",
+   "startWk": 2,
+   "endWk": 3,
+   "start": "Nov 30",
    "end": "Dec 11",
    "overdue": false
   }
