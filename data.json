@@ -1,12 +1,12 @@
 {
  "title": "OHCA GECX Voice Agent Stabilization",
  "subtitle": "Onix · Google · Oklahoma Health Care Authority",
- "asOf": "Mon Nov 23, 2026 at 12:11 AM EST",
+ "asOf": "Mon Nov 23, 2026 at 2:11 PM EST",
  "currentWeek": 1,
  "currentWeekLabel": "Week 1",
  "health": "At risk",
  "counts": {
-  "total": 43,
+  "total": 45,
   "done": 5,
   "inProgress": 1,
   "blocked": 0,
@@ -16,7 +16,7 @@
  },
  "nextMilestone": {
   "id": "1.16",
-  "task": "DECISION GATE: present recommendation",
+  "task": "DECISION GATE: present Assessment & Path-to-Production Recommendation (Milestone 1)",
   "owner": "Onix PM",
   "phase": "Assessment",
   "type": "Milestone",
@@ -97,6 +97,13 @@
    "start": "Jan 25",
    "holiday": false,
    "current": false
+  },
+  {
+   "n": 11,
+   "label": "W11",
+   "start": "Feb 1",
+   "holiday": false,
+   "current": false
   }
  ],
  "phases": [
@@ -124,7 +131,7 @@
   },
   {
    "name": "Build & Cutover",
-   "total": 19,
+   "total": 20,
    "done": 0,
    "pct": 0,
    "status": "Not Started",
@@ -135,14 +142,14 @@
   },
   {
    "name": "Hypercare & Close",
-   "total": 6,
+   "total": 7,
    "done": 0,
    "pct": 0,
    "status": "Not Started",
    "startWk": 9,
-   "endWk": 10,
+   "endWk": 11,
    "start": "Jan 18",
-   "end": "Jan 29"
+   "end": "Feb 5"
   }
  ],
  "milestones": [
@@ -161,7 +168,7 @@
   },
   {
    "id": "1.16",
-   "task": "DECISION GATE: present recommendation",
+   "task": "DECISION GATE: present Assessment & Path-to-Production Recommendation (Milestone 1)",
    "owner": "Onix PM",
    "phase": "Assessment",
    "type": "Milestone",
@@ -170,6 +177,19 @@
    "endWk": 3,
    "start": "Dec 7",
    "end": "Dec 11",
+   "overdue": false
+  },
+  {
+   "id": "2.22",
+   "task": "Milestone 2 deliverable: Stabilized Agent Architecture & Routing Blueprint",
+   "owner": "Onix Lead Engineer",
+   "phase": "Build & Cutover",
+   "type": "Milestone",
+   "status": "Not Started",
+   "startWk": 8,
+   "endWk": 8,
+   "start": "Jan 11",
+   "end": "Jan 15",
    "overdue": false
   },
   {
@@ -187,7 +207,7 @@
   },
   {
    "id": "2.21",
-   "task": "PRODUCTION CUTOVER (NICE admin executes; Onix supports)",
+   "task": "PRODUCTION CUTOVER: Onix deploys and integrates the agent with OHCA and NICE contacts in the approved window",
    "owner": "Onix Lead Engineer",
    "phase": "Build & Cutover",
    "type": "Milestone",
@@ -205,10 +225,23 @@
    "phase": "Hypercare & Close",
    "type": "Milestone",
    "status": "Not Started",
-   "startWk": 10,
-   "endWk": 10,
-   "start": "Jan 25",
-   "end": "Jan 29",
+   "startWk": 11,
+   "endWk": 11,
+   "start": "Feb 1",
+   "end": "Feb 5",
+   "overdue": false
+  },
+  {
+   "id": "3.8",
+   "task": "Executive presentation to Google and OHCA leadership: path to stable production, recommendations and roadmap",
+   "owner": "Onix PM",
+   "phase": "Hypercare & Close",
+   "type": "Milestone",
+   "status": "Not Started",
+   "startWk": 11,
+   "endWk": 11,
+   "start": "Feb 1",
+   "end": "Feb 5",
    "overdue": false
   }
  ],
