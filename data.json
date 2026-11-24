@@ -1,7 +1,7 @@
 {
  "title": "OHCA GECX Voice Agent Stabilization",
  "subtitle": "Onix · Google · Oklahoma Health Care Authority",
- "asOf": "Mon Nov 23, 2026 at 2:24 PM EST",
+ "asOf": "Tue Nov 24, 2026 at 9:17 AM EST",
  "currentWeek": 1,
  "currentWeekLabel": "Week 1",
  "health": "At risk",
@@ -11,8 +11,8 @@
   "inProgress": 1,
   "blocked": 0,
   "overdue": 0,
-  "openIssues": 0,
-  "openRisks": 0
+  "openIssues": 1,
+  "openRisks": 1
  },
  "nextMilestone": {
   "id": "1.16",
@@ -247,45 +247,6 @@
  ],
  "waiting": [
   {
-   "id": "A-02",
-   "type": "Action",
-   "title": "Deliver prod agent export, candidate CX Agent Studio agent, playbook, design docs and term-to-queue mapping",
-   "task": "Deliver prod agent export, candidate CX Agent Studio agent, playbook, design docs and term-to-queue mapping",
-   "description": "Partly received: playbook design document (SDD) and flow routing design documents. Still needed: production agent export, a confirmed term-to-queue mapping, and confirmation that the routing documents are current.",
-   "owner": "OHCA",
-   "priority": "High",
-   "status": "In Progress",
-   "due": "Nov 20",
-   "end": "Nov 20",
-   "overdue": true
-  },
-  {
-   "id": "A-03",
-   "type": "Action",
-   "title": "Deliver open-ticket list (200+) with call IDs, logs, recordings/transcripts and existing test cases",
-   "task": "Deliver open-ticket list (200+) with call IDs, logs, recordings/transcripts and existing test cases",
-   "description": "Partly received: a test-script spreadsheet and a short list of post-go-live bug descriptions. Still needed: tickets with call IDs, timestamps and transcripts or recordings; current speech settings (Chirp model, phrase lists, Spanish/Vietnamese setup); data store website list.",
-   "owner": "OHCA",
-   "priority": "High",
-   "status": "In Progress",
-   "due": "Nov 20",
-   "end": "Nov 20",
-   "overdue": true
-  },
-  {
-   "id": "A-04",
-   "type": "Action",
-   "title": "Provide non-prod environment, NICE test entry point and test phone numbers",
-   "task": "Provide non-prod environment, NICE test entry point and test phone numbers",
-   "description": "",
-   "owner": "OHCA NICE Admin",
-   "priority": "High",
-   "status": "Open",
-   "due": "Nov 20",
-   "end": "Nov 20",
-   "overdue": true
-  },
-  {
    "id": "A-15",
    "type": "Action",
    "title": "Share prior diagnosis notes, and the candidate CX Agent Studio agent's builder and current progress",
@@ -296,6 +257,19 @@
    "status": "Open",
    "due": "Nov 27",
    "end": "Nov 27",
+   "overdue": false
+  },
+  {
+   "id": "A-04",
+   "type": "Action",
+   "title": "Provide non-prod environment, NICE test entry point and test phone numbers",
+   "task": "Provide non-prod environment, NICE test entry point and test phone numbers",
+   "description": "Dialogflow CX dev and test environments are accessible (Nov 23). Still needed: NICE test entry point and test phone numbers.",
+   "owner": "OHCA NICE Admin",
+   "priority": "High",
+   "status": "In Progress",
+   "due": "Dec 4",
+   "end": "Dec 4",
    "overdue": false
   },
   {
@@ -316,21 +290,21 @@
    "type": "Action",
    "title": "Name all OHCA project roles, including Spanish and Vietnamese linguists, and confirm availability",
    "task": "Name all OHCA project roles, including Spanish and Vietnamese linguists, and confirm availability",
-   "description": "",
+   "description": "Confirmed Nov 23: Sheila for decisions, Bhargav for technical data, Greg (Gainwell) as first NICE contact with John Stone (NICE). Still needed: business owner, UAT testers, and Spanish/Vietnamese linguists.",
    "owner": "OHCA",
    "priority": "Medium",
-   "status": "Open",
-   "due": "Nov 20",
-   "end": "Nov 20",
-   "overdue": true
+   "status": "In Progress",
+   "due": "Dec 4",
+   "end": "Dec 4",
+   "overdue": false
   },
   {
-   "id": "A-14",
+   "id": "A-18",
    "type": "Action",
-   "title": "Provide NICE call-volume and routing reports by queue (baseline)",
-   "task": "Provide NICE call-volume and routing reports by queue (baseline)",
-   "description": "Needed to baseline current routing before the decision gate.",
-   "owner": "OHCA NICE Admin",
+   "title": "Provide Onix view-only access to production conversation logs",
+   "task": "Provide Onix view-only access to production conversation logs",
+   "description": "Needed to review real conversations with missing or empty intent. View access only, no PHI/PII.",
+   "owner": "OHCA",
    "priority": "Medium",
    "status": "Open",
    "due": "Dec 4",
@@ -470,5 +444,32 @@
    "overdue": false
   }
  ],
- "raid": []
+ "raid": [
+  {
+   "id": "I-02",
+   "type": "Issue",
+   "title": "CX Agent Studio access blocked (404 error, API restricted at the organization level)",
+   "task": "CX Agent Studio access blocked (404 error, API restricted at the organization level)",
+   "description": "Kat and Javier can't open CX Agent Studio in the dev/test environments, so the Track B half of the dual-track assessment can't start. OHCA to open a ServiceNow ticket with Google's justification; OMES (Stephen Jones's team) to enable the API.",
+   "owner": "OHCA",
+   "priority": "High",
+   "status": "Open",
+   "due": "Dec 1",
+   "end": "Dec 1",
+   "overdue": false
+  },
+  {
+   "id": "R-01",
+   "type": "Risk",
+   "title": "Dec 11 decision gate at risk if CX Agent Studio access isn't in place by about Dec 1",
+   "task": "Dec 11 decision gate at risk if CX Agent Studio access isn't in place by about Dec 1",
+   "description": "Without CX Agent Studio, the Track B (candidate agent) evaluation can't run, so the Track A vs. B comparison may not be ready for the decision gate. Mitigation: Kat and Javier start with routing and intent analysis in the current agent (Call Center skill) while access is resolved.",
+   "owner": "Onix PM",
+   "priority": "High",
+   "status": "Open",
+   "due": "Dec 1",
+   "end": "Dec 1",
+   "overdue": false
+  }
+ ]
 }
