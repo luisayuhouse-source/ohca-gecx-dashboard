@@ -1,7 +1,7 @@
 {
  "title": "OHCA GECX Voice Agent Stabilization",
  "subtitle": "Onix · Google · Oklahoma Health Care Authority",
- "asOf": "Fri Nov 27, 2026 at 9:11 PM EST",
+ "asOf": "Sat Nov 28, 2026 at 12:11 AM EST",
  "currentWeek": 1,
  "currentWeekLabel": "Week 1",
  "health": "At risk",
@@ -257,7 +257,7 @@
    "status": "Open",
    "due": "Nov 27",
    "end": "Nov 27",
-   "overdue": false
+   "overdue": true
   },
   {
    "id": "A-04",
